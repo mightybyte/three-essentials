@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Doug Beardsley">
+  <title>Three Essentials of a Modern Programming Language</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme">
+  <link rel="stylesheet" href="style.css"/>
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+  <h1 class="title">Three Essentials of a Modern Programming Language</h1>
+  <p class="author">Doug Beardsley</p>
+  <p class="date">Takt</p>
+</section>
+
+<section id="assumptions" class="slide level2">
+<h2>Assumptions</h2>
+<ul>
+<li>Don't assume programmers will get it right</li>
+<li>Automation: make the computer do it for you</li>
+<li>Language should have the right defaults</li>
+</ul>
+</section>
+<section id="essential-language-features" class="slide level2">
+<h2>Essential Language Features</h2>
+<ol type="1">
+<li>First-class functions</li>
+</ol>
+</section>
+<section><section id="first-class-functions" class="titleslide slide level1"><h1>First-class Functions</h1></section><section id="what-are-first-class-functions" class="slide level2">
+<h2>What are first-class functions?</h2>
+<ul>
+<li class="fragment">You can pass a function to another function</li>
+<li class="fragment">You can return a function from another function</li>
+<li class="fragment">&quot;Functional&quot;</li>
+</ul>
+</section><section id="why-first-class-functions" class="slide level2">
+<h2>Why first-class functions?</h2>
+<p>Abstract control flow</p>
+<pre><code>for ( i = 0; i &lt; p; i++ ) {
+  if ( someFunc(arr[i]) &gt; threshold ) {
+    for ( j = 0; j &lt; q; j++ ) {
+      if ( anotherCondition(foo[i][j]) ) {
+        // stuff here
+      }
+    }
+  }
+}</code></pre>
+</section><section id="essential-language-features-1" class="slide level2">
+<h2>Essential Language Features</h2>
+<ol type="1">
+<li>First-class functions</li>
+<li>Strong static type system w/ type inference</li>
+</ol>
+</section></section>
+<section><section id="strong-static-type-system" class="titleslide slide level1"><h1>Strong Static Type System</h1></section><section id="the-big-realization-of-computing" class="slide level2">
+<h2>The big realization of computing</h2>
+<ul>
+<li class="fragment">EVERYTHING can be a number</li>
+<li class="fragment">Data is numbers</li>
+<li class="fragment">Programs are numbers</li>
+</ul>
+</section><section id="whats-in-a-number" class="slide level2">
+<h2>What's in a number?</h2>
+<ul>
+<li class="fragment">11000001 00110100 11100010 01001101</li>
+<li class="fragment">What does that represent?</li>
+<li class="fragment">Int?</li>
+<li class="fragment">List<Bool>?</li>
+<li class="fragment">String?</li>
+<li class="fragment">Length in feet?</li>
+<li class="fragment">Length in meters?</li>
+</ul>
+</section><section id="types-matter" class="slide level2">
+<h2>Types matter</h2>
+</section><section id="strong-types" class="slide level2">
+<h2>Strong Types</h2>
+<ul>
+<li>Can't treat one type as another type</li>
+</ul>
+</section><section id="static-types" class="slide level2">
+<h2>Static Types</h2>
+<ul>
+<li>Compiler finds your problems up front</li>
+<li>Make invalid values impossible</li>
+<li>No null pointers</li>
+</ul>
+</section><section id="type-inference" class="slide level2">
+<h2>Type Inference</h2>
+<pre><code>foo x = x + 5
+
+(+) :: Num a =&gt; a -&gt; a -&gt; a
+
+foo :: Num a =&gt; a -&gt; a</code></pre>
+<p>If we know that 5 is an Int</p>
+<pre><code>foo :: Int -&gt; Int</code></pre>
+</section><section id="essential-language-features-2" class="slide level2">
+<h2>Essential Language Features</h2>
+<ol type="1">
+<li>First-class functions</li>
+<li>Strong static type system w/ type inference</li>
+<li>Purity by default</li>
+</ol>
+</section></section>
+<section><section id="purity-by-default" class="titleslide slide level1"><h1>Purity by Default</h1></section><section id="purity-has-a-precise-meaning" class="slide level2">
+<h2>Purity has a precise meaning</h2>
+<ul>
+<li class="fragment">Control of side effects</li>
+</ul>
+</section><section id="what-are-side-effects" class="slide level2">
+<h2>What are side effects?</h2>
+<ul>
+<li class="fragment">Anything that isn't passed in as an argument or returned</li>
+<li class="fragment">High school algebra: must pass the vertical line test</li>
+</ul>
+</section><section id="examples-of-side-effects" class="slide level2">
+<h2>Examples of Side Effects</h2>
+<ul>
+<li class="fragment">Launching the missiles</li>
+<li class="fragment">Formatting the hard drive</li>
+<li class="fragment">Reading from disk / keyboard</li>
+<li class="fragment">Mutating a variable</li>
+</ul>
+</section><section id="how-is-purity-useful" class="slide level2">
+<h2>How is purity useful?</h2>
+<ul>
+<li class="fragment">public BigInteger add(BigInteger val)</li>
+<li class="fragment">Things this function could do:</li>
+<li class="fragment">Format your hard drive</li>
+<li class="fragment">Phone home to another computer on the internet</li>
+<li class="fragment">Launch the missiles</li>
+<li class="fragment">val = 666</li>
+</ul>
+</section><section id="in-a-language-with-purity" class="slide level2">
+<h2>In a language with purity</h2>
+<pre><code>def addBigInteger(a:BigInteger, b:BigInteger) : IO[BigInteger]</code></pre>
+<p>vs</p>
+<pre><code>def addBigInteger(a:BigInteger, b:BigInteger) : BigInteger</code></pre>
+<p>or</p>
+<pre><code>addBigInteger :: BigInteger -&gt; BigInteger -&gt; IO BigInteger</code></pre>
+<p>vs</p>
+<pre><code>addBigInteger :: BigInteger -&gt; BigInteger -&gt; BigInteger</code></pre>
+</section><section id="strong-static-types-give-io-teeth" class="slide level2">
+<h2>Strong static types give IO teeth</h2>
+</section><section id="type-system-allows-more-granular-effects" class="slide level2">
+<h2>Type system allows more granular effects</h2>
+<pre><code>def writeFile(path:String, bytes:Array[Byte]) : FileIO[Unit]
+def readFile(path:String) : FileIO[Array[Byte]]
+
+writeFile :: FilePath -&gt; Bytes -&gt; FileIO ()
+readFile :: FilePath -&gt; FileIO Bytes</code></pre>
+</section></section>
+<section><section id="conclusion" class="titleslide slide level1"><h1>Conclusion</h1></section><section id="essential-language-features-3" class="slide level2">
+<h2>Essential Language Features</h2>
+<ol type="1">
+<li>First-class functions</li>
+<li>Strong static type system w/ type inference</li>
+<li>Purity by default</li>
+</ol>
+</section><section id="questions" class="slide level2">
+<h2>Questions?</h2>
+<p>doug@takt.com</p>
+<p>http://github.com/mightybyte/three-essentials</p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+              { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
