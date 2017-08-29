@@ -24,6 +24,47 @@
 
 Abstract control flow
 
+## Passing a function: map
+
+    names = [];
+    for ( var i = 0; i < people.length; i++ ) {
+      names[i] = people[i].name;
+    }
+
+## Passing a function: map
+
+    names = people.map(function(p) { return p.name; });
+
+or (ECMAScript 6)
+
+    names = people.map(p => p.name);
+
+## Passing a function: filter
+
+    minors = [];
+    for ( var i = 0; i < people.length; i++ ) {
+      if ( people[i].age < 18 ) {
+        minors.push(people[i]);
+      }
+    }
+
+## Passing a function: filter
+
+    names = people.filter(p => p.age < 18);
+
+## Passing a function: reduce
+
+    var sum = 0;
+    for ( var i = 0; i < values.length; i++ ) {
+      sum += values[i];
+    }
+
+## Passing a function: reduce
+
+    sum = values.reduce((a, b) => a + b, 0);
+
+## More Complex Control Flow
+
     for ( i = 0; i < p; i++ ) {
       if ( someFunc(arr[i]) > threshold ) {
         for ( j = 0; j < q; j++ ) {
@@ -33,6 +74,64 @@ Abstract control flow
         }
       }
     }
+
+## Returning a function
+
+> - Currying
+> - Currying is the idea that a function of multiple arguments can be treated
+>   as a function of one argument that returns another function.
+
+## Returning a function: currying
+
+    function foo(x, y, z) {
+      return 2 * x^2 + 3 * y - 5 * z;
+    } // Call with: foo(x, y, z);
+
+could be written like
+
+    function foo(x) {
+      return ((y, z) => 2 * x^2 + 3 * y - 5 * z);
+    } // Call with: foo(x)(y, z);
+
+or
+
+    function foo(x) {
+      return (y => (z => 2 * x^2 + 3 * y - 5 * z));
+    } // Call with: foo(x)(y)(z);
+
+## Currying Distilled
+
+    foo(x, y, z)
+
+turns into
+
+    foo(x)(y)(z)
+
+## Automatic currying in Haskell
+
+    foo x y z = 2 * x^2 + 3 * y - 5 * z
+
+call with
+
+    foo 2 3 4
+
+or
+
+    foo 2 3
+
+or
+
+    foo 2
+
+## Currying Convenience
+
+Instead of this
+
+    values.map(x => plus(1,x));
+
+we can do this
+
+    map (plus 1) values
 
 ## Essential Language Features
 
@@ -50,7 +149,7 @@ Abstract control flow
 ## What's in a number?
 
 > - 11000001 00110100 11100010 01001101
-> - What does that represent?
+> - What does that represent?  (What is its type?)
 > - Int?
 > - List<Bool>?
 > - String?
@@ -62,12 +161,15 @@ Abstract control flow
 ## Strong Types
 
 - Can't treat one type as another type
+- Makes things reliable, provides guarantees
 
 ## Static Types
 
+- Types are known (or can be calculated) at compile time
 - Compiler finds your problems up front
 - Make invalid values impossible
 - No null pointers
+- Catch variable name typos
 
 ## Type Inference
 
@@ -81,6 +183,7 @@ If we know that 5 is an Int
 
     foo :: Int -> Int
 
+NOTE: Lower case a means it's a type variable that can be any type.
 
 ## Essential Language Features
 
@@ -96,14 +199,18 @@ If we know that 5 is an Int
 
 ## What are side effects?
 
-> - Anything that isn't passed in as an argument or returned
-> - High school algebra: must pass the vertical line test
+> - Things that don't meet the mathematical definition of a function
+> - Anything that happens that isn't reflected in the arguments or return
+>   value
+> - Returning different values for the same input
+    (doesn't pass the vertical line test from high school algebra)
 
 ## Examples of Side Effects
 
 > - Launching the missiles
 > - Formatting the hard drive
 > - Reading from disk / keyboard
+> - Random number generator
 > - Mutating a variable
 
 ## How is purity useful?
@@ -127,7 +234,7 @@ or
 
     addBigInteger :: BigInteger -> BigInteger -> IO BigInteger
 
-vs    
+vs
 
     addBigInteger :: BigInteger -> BigInteger -> BigInteger
     

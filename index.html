@@ -58,6 +58,39 @@
 </section><section id="why-first-class-functions" class="slide level2">
 <h2>Why first-class functions?</h2>
 <p>Abstract control flow</p>
+</section><section id="passing-a-function-map" class="slide level2">
+<h2>Passing a function: map</h2>
+<pre><code>names = [];
+for ( var i = 0; i &lt; people.length; i++ ) {
+  names[i] = people[i].name;
+}</code></pre>
+</section><section id="passing-a-function-map-1" class="slide level2">
+<h2>Passing a function: map</h2>
+<pre><code>names = people.map(function(p) { return p.name; });</code></pre>
+<p>or (ECMAScript 6)</p>
+<pre><code>names = people.map(p =&gt; p.name);</code></pre>
+</section><section id="passing-a-function-filter" class="slide level2">
+<h2>Passing a function: filter</h2>
+<pre><code>minors = [];
+for ( var i = 0; i &lt; people.length; i++ ) {
+  if ( people[i].age &lt; 18 ) {
+    minors.push(people[i]);
+  }
+}</code></pre>
+</section><section id="passing-a-function-filter-1" class="slide level2">
+<h2>Passing a function: filter</h2>
+<pre><code>names = people.filter(p =&gt; p.age &lt; 18);</code></pre>
+</section><section id="passing-a-function-reduce" class="slide level2">
+<h2>Passing a function: reduce</h2>
+<pre><code>var sum = 0;
+for ( var i = 0; i &lt; values.length; i++ ) {
+  sum += values[i];
+}</code></pre>
+</section><section id="passing-a-function-reduce-1" class="slide level2">
+<h2>Passing a function: reduce</h2>
+<pre><code>sum = values.reduce((a, b) =&gt; a + b, 0);</code></pre>
+</section><section id="more-complex-control-flow" class="slide level2">
+<h2>More Complex Control Flow</h2>
 <pre><code>for ( i = 0; i &lt; p; i++ ) {
   if ( someFunc(arr[i]) &gt; threshold ) {
     for ( j = 0; j &lt; q; j++ ) {
@@ -67,6 +100,45 @@
     }
   }
 }</code></pre>
+</section><section id="returning-a-function" class="slide level2">
+<h2>Returning a function</h2>
+<ul>
+<li class="fragment">Currying</li>
+<li class="fragment">Currying is the idea that a function of multiple arguments can be treated as a function of one argument that returns another function.</li>
+</ul>
+</section><section id="returning-a-function-currying" class="slide level2">
+<h2>Returning a function: currying</h2>
+<pre><code>function foo(x, y, z) {
+  return 2 * x^2 + 3 * y - 5 * z;
+} // Call with: foo(x, y, z);</code></pre>
+<p>could be written like</p>
+<pre><code>function foo(x) {
+  return ((y, z) =&gt; 2 * x^2 + 3 * y - 5 * z);
+} // Call with: foo(x)(y, z);</code></pre>
+<p>or</p>
+<pre><code>function foo(x) {
+  return (y =&gt; (z =&gt; 2 * x^2 + 3 * y - 5 * z));
+} // Call with: foo(x)(y)(z);</code></pre>
+</section><section id="currying-distilled" class="slide level2">
+<h2>Currying Distilled</h2>
+<pre><code>foo(x, y, z)</code></pre>
+<p>turns into</p>
+<pre><code>foo(x)(y)(z)</code></pre>
+</section><section id="automatic-currying-in-haskell" class="slide level2">
+<h2>Automatic currying in Haskell</h2>
+<pre><code>foo x y z = 2 * x^2 + 3 * y - 5 * z</code></pre>
+<p>call with</p>
+<pre><code>foo 2 3 4</code></pre>
+<p>or</p>
+<pre><code>foo 2 3</code></pre>
+<p>or</p>
+<pre><code>foo 2</code></pre>
+</section><section id="currying-convenience" class="slide level2">
+<h2>Currying Convenience</h2>
+<p>Instead of this</p>
+<pre><code>values.map(x =&gt; plus(1,x));</code></pre>
+<p>we can do this</p>
+<pre><code>map (plus 1) values</code></pre>
 </section><section id="essential-language-features-1" class="slide level2">
 <h2>Essential Language Features</h2>
 <ol type="1">
@@ -85,7 +157,7 @@
 <h2>What's in a number?</h2>
 <ul>
 <li class="fragment">11000001 00110100 11100010 01001101</li>
-<li class="fragment">What does that represent?</li>
+<li class="fragment">What does that represent? (What is its type?)</li>
 <li class="fragment">Int?</li>
 <li class="fragment">List<Bool>?</li>
 <li class="fragment">String?</li>
@@ -98,13 +170,16 @@
 <h2>Strong Types</h2>
 <ul>
 <li>Can't treat one type as another type</li>
+<li>Makes things reliable, provides guarantees</li>
 </ul>
 </section><section id="static-types" class="slide level2">
 <h2>Static Types</h2>
 <ul>
+<li>Types are known (or can be calculated) at compile time</li>
 <li>Compiler finds your problems up front</li>
 <li>Make invalid values impossible</li>
 <li>No null pointers</li>
+<li>Catch variable name typos</li>
 </ul>
 </section><section id="type-inference" class="slide level2">
 <h2>Type Inference</h2>
@@ -115,6 +190,7 @@
 foo :: Num a =&gt; a -&gt; a</code></pre>
 <p>If we know that 5 is an Int</p>
 <pre><code>foo :: Int -&gt; Int</code></pre>
+<p>NOTE: Lower case a means it's a type variable that can be any type.</p>
 </section><section id="essential-language-features-2" class="slide level2">
 <h2>Essential Language Features</h2>
 <ol type="1">
@@ -131,8 +207,9 @@ foo :: Num a =&gt; a -&gt; a</code></pre>
 </section><section id="what-are-side-effects" class="slide level2">
 <h2>What are side effects?</h2>
 <ul>
-<li class="fragment">Anything that isn't passed in as an argument or returned</li>
-<li class="fragment">High school algebra: must pass the vertical line test</li>
+<li class="fragment">Things that don't meet the mathematical definition of a function</li>
+<li class="fragment">Anything that happens that isn't reflected in the arguments or return value</li>
+<li class="fragment">Returning different values for the same input (doesn't pass the vertical line test from high school algebra)</li>
 </ul>
 </section><section id="examples-of-side-effects" class="slide level2">
 <h2>Examples of Side Effects</h2>
@@ -140,6 +217,7 @@ foo :: Num a =&gt; a -&gt; a</code></pre>
 <li class="fragment">Launching the missiles</li>
 <li class="fragment">Formatting the hard drive</li>
 <li class="fragment">Reading from disk / keyboard</li>
+<li class="fragment">Random number generator</li>
 <li class="fragment">Mutating a variable</li>
 </ul>
 </section><section id="how-is-purity-useful" class="slide level2">
