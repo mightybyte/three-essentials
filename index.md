@@ -256,6 +256,14 @@ vs
 2. Strong static type system w/ type inference
 3. Purity by default
 
+## Benefits
+
+- More concise code
+- Less repetition
+- Catch problems sooner
+- Eliminates whole categories of bugs
+- Allows you to be more confident about what code does
+
 ## Questions?
 
 doug@takt.com
