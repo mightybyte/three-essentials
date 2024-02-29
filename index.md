@@ -1,6 +1,5 @@
 % Three Essentials of a Modern Programming Language
 % Doug Beardsley
-% Takt
 
 ## Assumptions
 
@@ -266,6 +265,7 @@ vs
 
 ## Questions?
 
-doug@takt.com
+mightybyte@gmail.com
+https://dot.cards/mightybyte
 
 http://github.com/mightybyte/three-essentials
