@@ -269,6 +269,7 @@ vs
 ## Questions?
 
 mightybyte@gmail.com
+
 https://dot.cards/mightybyte
 
 http://github.com/mightybyte/three-essentials
