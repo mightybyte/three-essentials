@@ -10,6 +10,8 @@
 ## Essential Language Features
 
 1. First-class functions
+2. Strong static type system w/ type inference
+3. Purity by default
 
 # First-class Functions
 
@@ -136,6 +138,7 @@ we can do this
 
 1. First-class functions
 2. Strong static type system w/ type inference
+3. Purity by default
 
 # Strong Static Type System
 
